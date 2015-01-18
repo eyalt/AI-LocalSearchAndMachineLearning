@@ -1,0 +1,8 @@
+# Necessary python dependencies for the assignments:
+# numpy is needed for scipy.
+# scipy is needed for t-Test. can be replaced by Excel/google sheets
+#sklearn is needed for decision trees. You can find/implement an alternative implementation.
+
+pip numpy
+pip scipy
+pip sklearn
