@@ -13,7 +13,7 @@ class FirstChoiceLocalSearch(LocalSearch):
         current_evaluation = current.evaluate(evaluation_set, evaluation_set_labels, *args, **kwargs)
         
         while True:
-            for next_state, next_op in shuffle(current.get_next_stats()):
+            for next_state, next_op in shuffle(current.get_next_states()):
                 next_evaluation = next_state.evaluate(evaluation_set, evaluation_set_labels, *args, **kwargs)
                 if next_evaluation > current_evaluation:
                     current = next_state
