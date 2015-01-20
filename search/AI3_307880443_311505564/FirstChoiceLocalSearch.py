@@ -18,7 +18,9 @@ class FirstChoiceLocalSearch(LocalSearch):
         while True:
             depth += 1
             print depth
-            for next_state, next_op in shuffle(current.get_next_states()):
+            next_states = current.get_next_states()
+            shuffle(next_states)
+            for next_state, next_op in next_states:
                 next_evaluation = next_state.evaluate(evaluation_set, evaluation_set_labels, *args, **kwargs)
                 if next_evaluation > current_evaluation:
                     current = next_state

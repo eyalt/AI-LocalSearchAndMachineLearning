@@ -71,7 +71,8 @@ def create_learning_state_ops(example_set):
     
     ops = [LearningStateOperator(cols_to_remove=[i]) for i in range(num_atts)]
     for i in range(num_atts):
-        ops.append(LearningStateOperator(rows_to_remove=(shuffle(rows_indexes))[:5]))
+        shuffle(rows_indexes)
+        ops.append(LearningStateOperator(rows_to_remove=rows_indexes[:5]))
     
     assert len(ops) == 2 * num_atts
     return ops
