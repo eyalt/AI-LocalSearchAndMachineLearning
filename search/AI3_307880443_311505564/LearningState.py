@@ -5,17 +5,27 @@
 from abstract_search import SearchState
 import copy
 from random import shuffle
+import time
 
 class LearningState(SearchState):
     def __init__(self, legal_operators, training_set, training_labels):
-        super(LearningState, self).__init__(self, legal_operators)
+        super(LearningState, self).__init__(legal_operators)
         self.training_set = training_set
         self.training_labels = training_labels
         
     def evaluate(self, evaluation_set, evaluation_set_labels, classifier, *args, **kwargs):
+#         print "Evaluating state"
+#         print "Training set: %dx%d" % (len(self.training_set), len(self.training_set[0]))
+#         print "Evaluation set: %dx%d" % (len(evaluation_set), len(evaluation_set[0]))
         classifier.train(self.training_set, self.training_labels)
         classified_labels = classifier.classify(evaluation_set)
         return calc_accuracy(classified_labels, evaluation_set_labels)
+    
+    def __str__(self, *args, **kwargs):
+        return "%dx%d" % (len(self.training_set), len(self.training_set[0]))
+    
+    def __repr__(self, *args, **kwargs):
+        return "%dx%d" % (len(self.training_set), len(self.training_set[0]))
 
 def calc_accuracy(classified_labels, real_labels):
     total_tests = len(real_labels)
@@ -29,7 +39,6 @@ class LearningStateOperator:
         
     def __call__(self, learningState):
         new_training_set, new_training_labels = self._update_training(learningState.training_set, learningState.training_labels)
-            
         # now the training set and training labels have been updated
         # build the new operations for the new state
         ops = create_learning_state_ops(new_training_set)
@@ -62,12 +71,18 @@ class LearningStateOperator:
             new_training_set.pop(i)
             new_training_labels.pop(i)
         return new_training_set, new_training_labels
-        
+    
+    def __str__(self, *args, **kwargs):
+        return "Rows %s, Cols %s" % (self._rows_to_remove, self._cols_to_remove)
+    
+    def __repr__(self, *args, **kwargs):
+        return "(%s,%s)" % (self._rows_to_remove, self._cols_to_remove)
+    
 def create_learning_state_ops(example_set):
     num_atts = len(example_set[0])
     rows_indexes = range(len(example_set))
-    print "Creating learning state ops"
-    print "#examples: %d, #atts: %d" % (num_atts, len(example_set))
+#     print "Creating learning state ops"
+#     print "#examples: %d, #atts: %d" % (len(example_set), num_atts)
     
     ops = [LearningStateOperator(cols_to_remove=[i]) for i in range(num_atts)]
     for i in range(num_atts):
