@@ -1,0 +1,55 @@
+KNearestNeighbours testing:
+For K = 1
+testing fold 0
+testing fold 1
+testing fold 2
+testing fold 3
+testing fold 4
+testing fold 5
+testing fold 6
+testing fold 7
+testing fold 8
+testing fold 9
+Accuracy without LR: 0.58380952381 Accuracy with LR: 0.574285714286 Significant: False Better: False
+Accuracy without LR: 0.58380952381 Accuracy with BONUS: 0.584047619048 Significant: False Better: True
+For K = 3
+testing fold 0
+testing fold 1
+testing fold 2
+testing fold 3
+testing fold 4
+testing fold 5
+testing fold 6
+testing fold 7
+testing fold 8
+testing fold 9
+Accuracy without LR: 0.646666666667 Accuracy with LR: 0.608095238095 Significant: True Better: False
+Accuracy without LR: 0.646666666667 Accuracy with BONUS: 0.646904761905 Significant: False Better: True
+
+DecisionTree testing:
+For min leaf size = 1
+testing fold 0
+testing fold 1
+testing fold 2
+testing fold 3
+testing fold 4
+testing fold 5
+testing fold 6
+testing fold 7
+testing fold 8
+testing fold 9
+Accuracy without LR: 0.579761904762 Accuracy with LR: 0.506428571429 Significant: False Better: False
+Accuracy without LR: 0.579761904762 Accuracy with BONUS: 0.526666666667 Significant: False Better: False
+For min leaf size = 3
+testing fold 0
+testing fold 1
+testing fold 2
+testing fold 3
+testing fold 4
+testing fold 5
+testing fold 6
+testing fold 7
+testing fold 8
+testing fold 9
+Accuracy without LR: 0.584523809524 Accuracy with LR: 0.527380952381 Significant: False Better: False
+Accuracy without LR: 0.584523809524 Accuracy with BONUS: 0.535952380952 Significant: False Better: False

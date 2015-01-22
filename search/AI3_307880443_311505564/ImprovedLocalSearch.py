@@ -2,29 +2,34 @@
 @author: Itay
 '''
 
-from abstract_search import LocalSearch
+from hw3.search.AI3_307880443_311505564.FirstChoiceLocalSearch import FirstChoiceLocalSearch
 from random import shuffle
-from data import load_hw3_data_1
-from classifier import KNearestNeighbours
-from search.AI3_307880443_311505564.LearningState import create_learning_state_ops, \
+from hw3.data import load_hw3_data_1
+from hw3.classifier import KNearestNeighbours
+from hw3.search.AI3_307880443_311505564.LearningState import create_learning_state_ops, \
     LearningState, calc_accuracy
 import time
 
-MAX_RESTARTS = 5
+MAX_RESTARTS = 4
 
 #we now support random restart!
-class ImprovedFirstChoiceLocalSearch(FirstChoiceLocalSearch):
-    def search(self, evaluation_set, evaluation_set_labels, *args, **kwargs):    
+class ImprovedLocalSearch(FirstChoiceLocalSearch):
+    def __init__(self,startingState):
+        self.startingState = startingState
+        super(ImprovedFirstChoiceLocalSearch,self).__init__(startingState)
+        
+    def search(self, evaluation_set, evaluation_set_labels, *args, **kwargs):
         max_accuracy = 0
         for attempt in xrange(MAX_RESTARTS):
-    
-            state, ops = super().search(evaluation_set, evaluation_set_labels, classifier)
+            
+            state, ops = super(ImprovedFirstChoiceLocalSearch, self).search(evaluation_set, evaluation_set_labels, *args, **kwargs)
+            new_evaluation_set = evaluation_set
             for op in ops:
                 new_evaluation_set = op.remove_attributes(new_evaluation_set)
             curr_accuracy = state.evaluate(new_evaluation_set, evaluation_set_labels, *args, **kwargs)
             if curr_accuracy>max_accuracy:
                 best_state,best_ops = state,ops
-
+            super(ImprovedFirstChoiceLocalSearch,self).__init__(self.startingState)
         return best_state,best_ops
 
 

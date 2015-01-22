@@ -2,13 +2,14 @@
 @author: Eyal
 '''
 
-from abstract_search import LocalSearch
+from hw3.abstract_search import LocalSearch
 from random import shuffle
-from data import load_hw3_data_1
-from classifier import KNearestNeighbours
-from search.AI3_307880443_311505564.LearningState import create_learning_state_ops, \
+from hw3.data import load_hw3_data_1
+from hw3.classifier import KNearestNeighbours
+from hw3.search.AI3_307880443_311505564.LearningState import create_learning_state_ops, \
     LearningState, calc_accuracy
 import time
+
 
 class FirstChoiceLocalSearch(LocalSearch):
     def search(self, evaluation_set, evaluation_set_labels, *args, **kwargs):
@@ -18,10 +19,8 @@ class FirstChoiceLocalSearch(LocalSearch):
         depth = 0
         while True:
             depth += 1
-            print "Step", depth
             start = time.clock()
             next_states = current.get_next_states()
-            print "Generating %d new states. time: %f" % (len(next_states), time.clock() - start)
             shuffle(next_states)
             num_evaluations = 0
             start = time.clock()
@@ -31,9 +30,6 @@ class FirstChoiceLocalSearch(LocalSearch):
                 next_evaluation_set_labels = evaluation_set_labels
                 next_evaluation = next_state.evaluate(next_evaluation_set, next_evaluation_set_labels, *args, **kwargs)
                 if next_evaluation > current_evaluation:
-                    print "Found a better state after %d evaluations. time: %f" % (num_evaluations, time.clock() - start)
-                    print "Chosen op:", next_op
-                    print "Chosen state:", next_state
                     current = next_state
                     current_evaluation = next_evaluation
                     evaluation_set = next_evaluation_set
@@ -42,7 +38,6 @@ class FirstChoiceLocalSearch(LocalSearch):
                     self.operators.append(next_op)
                     break
             else:
-                print "Finished searching after %d steps. time: %f" % (depth, time.clock() - start)
                 return current, self.operators
 
 

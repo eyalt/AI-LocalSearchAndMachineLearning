@@ -2,7 +2,7 @@
 @author: Eyal
 '''
 
-from abstract_search import SearchState
+from hw3.abstract_search import SearchState
 import copy
 from random import shuffle
 import time
